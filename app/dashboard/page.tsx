@@ -102,7 +102,7 @@ export default function Page() {
             <Link href={`/dashboard/settings/${user?._id}`}>
               <CardSpotlight className="w-full cursor-pointer">
                 <h1 className="text-4xl mt-2 font-bold">
-                  {categories?.length! || "0"}
+                  {categories && (categories?.length || "0")}
                 </h1>
                 <h1 className="text-xl mt-2 text-neutral-300">Categories</h1>
               </CardSpotlight>
@@ -114,7 +114,7 @@ export default function Page() {
                 customers?.length === 0 && "bg-neutral-950 border"
               } h-[60vh]`}
             >
-              {customers?.length! === 0 ? (
+              {customers && customers?.length === 0 ? (
                 <>
                   <div className="flex items-center justify-center w-full h-full">
                     <div className="flex flex-col gap-2 justify-center items-center">
@@ -170,7 +170,7 @@ export default function Page() {
                 products?.length === 0 && "bg-neutral-950 border"
               } h-[60vh]`}
             >
-              {products?.length! === 0 ? (
+              {products && products?.length === 0 ? (
                 <>
                   <div className="flex items-center justify-center w-full h-full">
                     <div className="flex flex-col gap-2 justify-center items-center">

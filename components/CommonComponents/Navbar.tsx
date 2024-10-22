@@ -29,7 +29,14 @@ export default function Navbar() {
           <nav className="w-full z-40 flex items-center justify-between py-6 px-6 lg:px-8 fixed top-0 backdrop-blur-md">
             <Link href={"/"}>
               <h1 className="lg:text-3xl text-2xl font-bold flex">
-                Ten <img src="/icons/logo.png" width={18} /> si
+                Ten
+                <Image
+                  src="/icons/logo.png"
+                  width={18}
+                  height={18}
+                  alt="Company Logo" // Add a meaningful alt text
+                />
+                si
               </h1>
             </Link>
             <ul className="lg:flex md:hidden hidden items-center justify-center gap-4 text-gray-300 text-lg">
@@ -82,7 +89,7 @@ export default function Navbar() {
                     }
                     width={50}
                     height={50}
-                    alt="profile"
+                    alt="profile" // Ensure alt text is meaningful
                     className="rounded-full"
                   />
                 </>

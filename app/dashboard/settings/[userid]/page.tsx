@@ -282,7 +282,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <DialogTitle>Setup your Profile</DialogTitle>
                             <DialogDescription>
                               Make changes to your profile here. Click save when
-                              you're done.
+                              you&apos;re done.
                             </DialogDescription>
                           </DialogHeader>
                           <div className="flex items-center justify-center gap-4 mb-4 mt-2">
@@ -341,9 +341,10 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <Label htmlFor="cnic_picture" className="mb-2">
                               CNIC picture
                             </Label>
-                            {userEdit?.cnic_picture?.length! > 0 ? (
+                            {userEdit?.cnic_picture?.length &&
+                            userEdit?.cnic_picture?.length > 0 ? (
                               <Image
-                                src={userEdit?.cnic_picture!}
+                                src={userEdit?.cnic_picture ?? ""}
                                 width={625}
                                 height={374}
                                 className="rounded-lg h-[374] w-[625] mt-4 lg:mt-6"
@@ -413,7 +414,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <DialogTitle>Create new Category</DialogTitle>
                             <DialogDescription>
                               Make changes to your profile here. Click save when
-                              you're done.
+                              you&apos;redone.
                             </DialogDescription>
                           </DialogHeader>
                           <LabelInputContainer className="mb-4 mt-4">

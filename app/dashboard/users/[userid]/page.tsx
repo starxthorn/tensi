@@ -56,8 +56,8 @@ export default function Page({ params }: { params: { userid: string } }) {
   >([]);
 
   const handleFiltering = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    let filtering = customers?.filter((item) => {
+    const value = e.target.value;
+    const filtering = customers?.filter((item) => {
       if (item.name) {
         return item?.name
           .toLowerCase()
@@ -84,7 +84,7 @@ export default function Page({ params }: { params: { userid: string } }) {
     });
   };
 
-  const fetchCustomer = async (cid: any) => {
+  const fetchCustomer = async (cid: string) => {
     try {
       const res = await fetch(`/api/customer?customerid=${cid}`, {
         method: "GET",
@@ -116,7 +116,7 @@ export default function Page({ params }: { params: { userid: string } }) {
         toast.error("Please verify your account");
         setLoader(false);
       } else {
-        if (products?.length! <= 0) {
+        if (products && products.length <= 0) {
           toast.error("Please add any product");
           setLoader(false);
         } else {
@@ -146,7 +146,7 @@ export default function Page({ params }: { params: { userid: string } }) {
 
   const updating_customer = async (
     e: React.FormEvent<HTMLFormElement>,
-    cid: any
+    cid: string
   ) => {
     e.preventDefault();
     setLoader(true);
@@ -167,7 +167,7 @@ export default function Page({ params }: { params: { userid: string } }) {
     }
   };
 
-  const deleting_product = async (cid: any) => {
+  const deleting_product = async (cid: string) => {
     try {
       const res = await fetch(`/api/customer?customerid=${cid}`, {
         method: "DELETE",
@@ -209,7 +209,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                       <DialogTitle>Create new Customer</DialogTitle>
                       <DialogDescription>
                         Make changes to your profile here. Click save when
-                        you're done.
+                        you&apos;re done.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="flex items-center justify-between gap-4 mb-4 mt-4">
@@ -323,7 +323,10 @@ export default function Page({ params }: { params: { userid: string } }) {
                               ?.map((data, id) => {
                                 return (
                                   <>
-                                    <SelectItem value={data?._id!} key={id}>
+                                    <SelectItem
+                                      value={data?._id ?? ""}
+                                      key={id}
+                                    >
                                       {data?.name}
                                     </SelectItem>
                                   </>
@@ -367,7 +370,7 @@ export default function Page({ params }: { params: { userid: string } }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredCustomers?.length! >= 1 ? (
+              {filteredCustomers && filteredCustomers?.length >= 1 ? (
                 <>
                   {filteredCustomers
                     ?.map((data, id) => {
@@ -399,7 +402,9 @@ export default function Page({ params }: { params: { userid: string } }) {
                               <Dialog>
                                 <DialogTrigger asChild>
                                   <FaEdit
-                                    onClick={() => fetchCustomer(data?._id!)}
+                                    onClick={() =>
+                                      fetchCustomer(data?._id ?? "")
+                                    }
                                     className="hover:text-white text-gray-500 transition-all text-lg cursor-pointer"
                                   />
                                 </DialogTrigger>
@@ -410,12 +415,12 @@ export default function Page({ params }: { params: { userid: string } }) {
                                     </DialogTitle>
                                     <DialogDescription>
                                       Make changes to your profile here. Click
-                                      save when you're done.
+                                      save when you&apos;re done.
                                     </DialogDescription>
                                   </DialogHeader>
                                   <form
                                     onSubmit={(e) =>
-                                      updating_customer(e, data?._id!)
+                                      updating_customer(e, data?._id ?? "")
                                     }
                                   >
                                     <div className="flex items-center justify-between gap-4 mb-4 mt-4">
@@ -550,7 +555,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                                 return (
                                                   <>
                                                     <SelectItem
-                                                      value={data?._id!}
+                                                      value={data?._id ?? ""}
                                                       key={id}
                                                     >
                                                       {data?.name}
@@ -605,7 +610,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                     </AlertDialogCancel>
                                     <AlertDialogAction
                                       onClick={() =>
-                                        deleting_product(data?._id!)
+                                        deleting_product(data?._id ?? "")
                                       }
                                     >
                                       Delete
@@ -632,7 +637,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <TableCell>{data.cnic}</TableCell>
                             <TableCell>{data.debit}</TableCell>
                             <TableCell>{data.credit}</TableCell>
-                            <TableCell>{data?.product?.name!}</TableCell>
+                            <TableCell>{data?.product?.name}</TableCell>
                             <TableCell>
                               {data?.purchase === "installment" ? (
                                 <>
@@ -652,7 +657,9 @@ export default function Page({ params }: { params: { userid: string } }) {
                               <Dialog>
                                 <DialogTrigger asChild>
                                   <FaEdit
-                                    onClick={() => fetchCustomer(data?._id!)}
+                                    onClick={() =>
+                                      fetchCustomer(data?._id ?? "")
+                                    }
                                     className="hover:text-white text-gray-500 transition-all text-lg cursor-pointer"
                                   />
                                 </DialogTrigger>
@@ -663,12 +670,12 @@ export default function Page({ params }: { params: { userid: string } }) {
                                     </DialogTitle>
                                     <DialogDescription>
                                       Make changes to your profile here. Click
-                                      save when you're done.
+                                      save when you&apos;re done.
                                     </DialogDescription>
                                   </DialogHeader>
                                   <form
                                     onSubmit={(e) =>
-                                      updating_customer(e, data?._id!)
+                                      updating_customer(e, data?._id ?? "")
                                     }
                                   >
                                     <div className="flex items-center justify-between gap-4 mb-4 mt-4">
@@ -803,7 +810,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                                 return (
                                                   <>
                                                     <SelectItem
-                                                      value={data?._id!}
+                                                      value={data?._id ?? ""}
                                                       key={id}
                                                     >
                                                       {data?.name}
@@ -858,7 +865,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                     </AlertDialogCancel>
                                     <AlertDialogAction
                                       onClick={() =>
-                                        deleting_product(data?._id!)
+                                        deleting_product(data?._id ?? "")
                                       }
                                     >
                                       Delete

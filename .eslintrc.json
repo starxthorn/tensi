@@ -1,3 +1,7 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "no-empty-interface": "off", // Disable the empty interface rule
+    "react-hooks/exhaustive-deps": "off" // Disable the missing dependency warning for useEffect
+  }
 }

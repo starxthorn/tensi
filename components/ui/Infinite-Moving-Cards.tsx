@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 export const InfiniteMovingCards = ({
   items,
@@ -22,12 +22,9 @@ export const InfiniteMovingCards = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    addAnimation();
-  }, []);
-
   const [start, setStart] = useState(false);
-  function addAnimation() {
+
+  const addAnimation = useCallback(() => {
     if (containerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
 
@@ -42,7 +39,12 @@ export const InfiniteMovingCards = ({
       getSpeed();
       setStart(true);
     }
-  }
+  }, [direction, speed]); // Include dependencies that may affect the function
+
+  useEffect(() => {
+    addAnimation();
+  }, [addAnimation]); // Add addAnimation to the dependency array
+
   const getDirection = () => {
     if (containerRef.current) {
       if (direction === "left") {
@@ -58,6 +60,7 @@ export const InfiniteMovingCards = ({
       }
     }
   };
+
   const getSpeed = () => {
     if (containerRef.current) {
       if (speed === "fast") {
@@ -69,19 +72,20 @@ export const InfiniteMovingCards = ({
       }
     }
   };
+
   console.log(items);
   return (
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20  w-5/6 overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        "scroller relative z-20 w-5/6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
         className
       )}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          " flex min-w-full shrink-0 gap-10 py-4 w-max flex-nowrap",
+          "flex min-w-full shrink-0 gap-10 py-4 w-max flex-nowrap",
           start && "animate-scroll ",
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
@@ -92,7 +96,7 @@ export const InfiniteMovingCards = ({
             height={1}
             src={item.href}
             alt={item.href}
-            className=" relative rounded-2xl  object-contain opacity-50"
+            className="relative rounded-2xl object-contain opacity-50"
             key={item.href}
           />
         ))}

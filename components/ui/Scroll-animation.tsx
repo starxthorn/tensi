@@ -78,7 +78,6 @@ export const Header = ({ translate, titleComponent }: HeaderProps) => {
 export const Card = ({
   rotate,
   scale,
-  translate, // Added translate as a prop
   children,
 }: {
   rotate: MotionValue<number>;

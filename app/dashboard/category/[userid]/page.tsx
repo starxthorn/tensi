@@ -92,7 +92,7 @@ export default function Page({ params }: { params: { userid: string } }) {
       toast.error("Please verify your account");
       setLoader(false);
     } else {
-      if (categories?.length! <= 0) {
+      if (categories && categories?.length <= 0) {
         toast.error("Please add any category");
         setLoader(false);
       } else {
@@ -120,7 +120,7 @@ export default function Page({ params }: { params: { userid: string } }) {
     }
   };
 
-  const fetchProduct = async (pid: any) => {
+  const fetchProduct = async (pid: string) => {
     try {
       const res = await fetch(`/api/product?productid=${pid}`, {
         method: "GET",
@@ -136,7 +136,7 @@ export default function Page({ params }: { params: { userid: string } }) {
 
   const updating_products = async (
     e: React.FormEvent<HTMLFormElement>,
-    pid: any
+    pid: string
   ) => {
     e.preventDefault();
     setLoader(true);
@@ -163,7 +163,7 @@ export default function Page({ params }: { params: { userid: string } }) {
     }
   };
 
-  const deleting_product = async (pid: any) => {
+  const deleting_product = async (pid: string) => {
     try {
       const res = await fetch(`/api/product?productid=${pid}`, {
         method: "DELETE",
@@ -203,8 +203,8 @@ export default function Page({ params }: { params: { userid: string } }) {
                   <DialogHeader>
                     <DialogTitle>Create new Product</DialogTitle>
                     <DialogDescription>
-                      Make changes to your profile here. Click save when you're
-                      done.
+                      Make changes to your profile here. Click save when
+                      you&apos;re done.
                     </DialogDescription>
                   </DialogHeader>
                   <LabelInputContainer className="mb-4 mt-4">
@@ -260,7 +260,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                       <SelectContent>
                         {categories
                           ?.map((data, id) => (
-                            <SelectItem value={data?.category!} key={id}>
+                            <SelectItem value={data?.category || ""} key={id}>
                               {data?.category}
                             </SelectItem>
                           ))
@@ -297,7 +297,7 @@ export default function Page({ params }: { params: { userid: string } }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredProducts?.length! >= 1 ? (
+            {filteredProducts && filteredProducts?.length >= 1 ? (
               <>
                 {filteredProducts
                   ?.map((data, id) => (
@@ -307,7 +307,8 @@ export default function Page({ params }: { params: { userid: string } }) {
                       <TableCell>{data?.price}</TableCell>
                       <TableCell
                         className={`${
-                          data?.stock! <= 5 ? "text-red-500" : "text-green-500"
+                          data.stock &&
+                          (data?.stock <= 5 ? "text-red-500" : "text-green-500")
                         }`}
                       >
                         {data?.stock}
@@ -317,19 +318,21 @@ export default function Page({ params }: { params: { userid: string } }) {
                         <Dialog>
                           <DialogTrigger asChild>
                             <FaEdit
-                              onClick={() => fetchProduct(data?._id)}
+                              onClick={() => fetchProduct(data?._id ?? "")}
                               className="hover:text-white text-gray-500 transition-all text-lg cursor-pointer"
                             />
                           </DialogTrigger>
                           <DialogContent className="sm:max-w-[425px]">
                             <form
-                              onSubmit={(e) => updating_products(e, data?._id)}
+                              onSubmit={(e) =>
+                                updating_products(e, data?._id ?? "")
+                              }
                             >
                               <DialogHeader>
                                 <DialogTitle>Edit the Product</DialogTitle>
                                 <DialogDescription>
                                   Make changes to your profile here. Click save
-                                  when you're done.
+                                  when you&apos;re done.
                                 </DialogDescription>
                               </DialogHeader>
                               <LabelInputContainer className="mb-4 mt-4">
@@ -382,7 +385,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                   <SelectContent>
                                     {categories?.map((data, id) => (
                                       <SelectItem
-                                        value={data?.category!}
+                                        value={data?.category ?? ""}
                                         key={id}
                                       >
                                         {data.category}
@@ -428,7 +431,9 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
-                                onClick={() => deleting_product(data?._id)}
+                                onClick={() =>
+                                  deleting_product(data?._id ?? "")
+                                }
                               >
                                 Delete
                               </AlertDialogAction>
@@ -450,7 +455,8 @@ export default function Page({ params }: { params: { userid: string } }) {
                       <TableCell>{data?.price}</TableCell>
                       <TableCell
                         className={`${
-                          data?.stock! <= 5 ? "text-red-500" : "text-green-500"
+                          data?.stock &&
+                          (data?.stock <= 5 ? "text-red-500" : "text-green-500")
                         }`}
                       >
                         {data?.stock}
@@ -460,19 +466,21 @@ export default function Page({ params }: { params: { userid: string } }) {
                         <Dialog>
                           <DialogTrigger asChild>
                             <FaEdit
-                              onClick={() => fetchProduct(data?._id)}
+                              onClick={() => fetchProduct(data?._id ?? "")}
                               className="hover:text-white text-gray-500 transition-all text-lg cursor-pointer"
                             />
                           </DialogTrigger>
                           <DialogContent className="sm:max-w-[425px]">
                             <form
-                              onSubmit={(e) => updating_products(e, data?._id)}
+                              onSubmit={(e) =>
+                                updating_products(e, data?._id ?? "")
+                              }
                             >
                               <DialogHeader>
                                 <DialogTitle>Edit the Product</DialogTitle>
                                 <DialogDescription>
                                   Make changes to your profile here. Click save
-                                  when you're done.
+                                  when you&apos;re done.
                                 </DialogDescription>
                               </DialogHeader>
                               <LabelInputContainer className="mb-4 mt-4">
@@ -525,7 +533,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                   <SelectContent>
                                     {categories?.map((data, id) => (
                                       <SelectItem
-                                        value={data?.category!}
+                                        value={data?.category ?? ""}
                                         key={id}
                                       >
                                         {data.category}
@@ -571,7 +579,9 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
-                                onClick={() => deleting_product(data?._id)}
+                                onClick={() =>
+                                  deleting_product(data?._id ?? "")
+                                }
                               >
                                 Delete
                               </AlertDialogAction>
