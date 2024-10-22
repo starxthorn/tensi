@@ -69,7 +69,7 @@ export default function Navbar() {
             <div className="lg:flex md:hidden hidden items-center justify-center gap-4">
               {session.data ? (
                 <>
-                  <Link href={`/dashboard/${session?.data?.user?._id}`}>
+                  <Link href={`/dashboard`}>
                     <TailwindButton onClick={() => setLoader(true)}>
                       {loader ? (
                         <div className="flex items-center justify-center gap-2">

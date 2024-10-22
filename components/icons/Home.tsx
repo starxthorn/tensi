@@ -1,14 +1,12 @@
 "use client";
 import { cn } from "@/lib/utils";
 import clsx from "clsx";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Home = () => {
   const pathname = usePathname();
-  const session = useSession();
-  const path = `/dashboard/${session.data?.user._id}`;
+  const path = `/dashboard`;
   return (
     <>
       <Link

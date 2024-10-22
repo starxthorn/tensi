@@ -120,22 +120,37 @@ export default function Page({ params }: { params: { userid: string } }) {
           toast.error("Please add any product");
           setLoader(false);
         } else {
-          const res = await fetch(
-            `/api/customer?userid=${params.userid}&productid=${customer?.product?._id}`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(customer),
-            }
-          );
-          const data = await res.json();
-          if (res.ok) {
-            toast.success(data.message);
-            window.location.reload();
+          if (customer?.product?.stock && customer?.product?.stock <= 0) {
+            toast.error("Product stock is zero");
+            setLoader(false);
           } else {
-            toast.error("Something wrong");
+            const productStock = customer?.product?.stock;
+            if (productStock) {
+              await fetch(`/api/product?productid=${customer.product?._id}`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ stock: productStock - 1 }),
+              });
+            }
+            const res = await fetch(
+              `/api/customer?userid=${params.userid}&productid=${customer?.product?._id}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(customer),
+              }
+            );
+            const data = await res.json();
+            if (res.ok) {
+              toast.success(data.message);
+              window.location.reload();
+            } else {
+              toast.error("Something wrong");
+            }
           }
         }
       }
