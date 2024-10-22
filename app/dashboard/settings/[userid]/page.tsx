@@ -41,7 +41,7 @@ import MiniLoader from "@/components/Loaders/MiniLoader";
 import { useCurrentUser } from "@/contextApi/CurrentUser";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function page({ params }: { params: { userid: string } }) {
+export default function Page({ params }: { params: { userid: string } }) {
   const session = useSession();
   const [userEdit, setUserEdit] = useState<UserType | null>({});
   const [loader, setLoader] = useState(false);

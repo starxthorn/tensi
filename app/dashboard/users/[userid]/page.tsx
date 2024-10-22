@@ -47,7 +47,7 @@ import { CustomerType } from "@/lib/type";
 import { toast } from "sonner";
 import MiniLoader from "@/components/Loaders/MiniLoader";
 
-export default function page({ params }: { params: { userid: string } }) {
+export default function Page({ params }: { params: { userid: string } }) {
   const { customers, products, user } = useCurrentUser();
   const [customer, setCustomer] = useState<CustomerType | null>({});
   const [loader, setLoader] = useState(false);

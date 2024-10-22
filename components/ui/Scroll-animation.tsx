@@ -9,7 +9,8 @@ export const ContainerScroll = ({
   titleComponent: string | React.ReactNode;
   children: React.ReactNode;
 }) => {
-  const containerRef = useRef<any>(null);
+  // Use a more specific type for containerRef
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
   });
@@ -54,7 +55,13 @@ export const ContainerScroll = ({
   );
 };
 
-export const Header = ({ translate, titleComponent }: any) => {
+interface HeaderProps {
+  translate: MotionValue<number>;
+  titleComponent: string | React.ReactNode;
+}
+
+// Specify more precise types for the Header component props
+export const Header = ({ translate, titleComponent }: HeaderProps) => {
   return (
     <motion.div
       style={{
@@ -67,14 +74,16 @@ export const Header = ({ translate, titleComponent }: any) => {
   );
 };
 
+// Updated Card component props
 export const Card = ({
   rotate,
   scale,
+  translate, // Added translate as a prop
   children,
 }: {
   rotate: MotionValue<number>;
   scale: MotionValue<number>;
-  translate: MotionValue<number>;
+  translate: MotionValue<number>; // Ensure translate is defined here
   children: React.ReactNode;
 }) => {
   return (
@@ -87,7 +96,7 @@ export const Card = ({
       }}
       className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
     >
-      <div className=" h-full w-full  overflow-hidden rounded-2xl bg-zinc-900 md:rounded-2xl md:p-4 ">
+      <div className="h-full w-full overflow-hidden rounded-2xl bg-zinc-900 md:rounded-2xl md:p-4">
         {children}
       </div>
     </motion.div>

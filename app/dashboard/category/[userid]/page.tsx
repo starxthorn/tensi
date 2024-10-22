@@ -57,8 +57,8 @@ export default function Page({ params }: { params: { userid: string } }) {
   >([]);
 
   const handleFiltering = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    let filtering = products?.filter((item) => {
+    const value = e.target.value;
+    const filtering = products?.filter((item) => {
       if (item.name) {
         return item?.name
           .toLowerCase()

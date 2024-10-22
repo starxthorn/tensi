@@ -13,7 +13,7 @@ import { signIn, useSession } from "next-auth/react";
 import Button from "@/components/ReusableComponents/Button";
 import MiniLoader from "@/components/Loaders/MiniLoader";
 
-export default function page() {
+export default function Page() {
   const [loader, setLoader] = useState(false);
   const router = useRouter();
   const session = useSession();
@@ -64,6 +64,7 @@ export default function page() {
       setLoader(false);
     }
   };
+
   return (
     <>
       <div className="h-[50rem] -z-10 w-full bg-neutral-950 bg-grid-white/[0.05] absolute top-0 flex items-center justify-center">
@@ -111,12 +112,10 @@ export default function page() {
             </Link>
             <Button btnType={loader ? "button" : "submit"}>
               {loader ? (
-                <>
-                  <div className="flex items-center justify-center gap-4">
-                    <MiniLoader />
-                    <p className="text-neutral-400">Sign In</p>
-                  </div>
-                </>
+                <div className="flex items-center justify-center gap-4">
+                  <MiniLoader />
+                  <p className="text-neutral-400">Sign In</p>
+                </div>
               ) : (
                 "Sign In"
               )}

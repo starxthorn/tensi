@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
   await connectdb();
   const userid = req.nextUrl.searchParams.get("userid");
   try {
-    let user = await User.findByIdAndUpdate(userid, await req.json(), {
+    const user = await User.findByIdAndUpdate(userid, await req.json(), {
       new: true,
       runValidators: true,
       useFindAndModify: false,

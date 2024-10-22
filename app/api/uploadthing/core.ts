@@ -1,7 +1,6 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 const f = createUploadthing();
-import { getSession } from "next-auth/react";
 
 const auth = async (req: Request) => ({ id: "id" });
 

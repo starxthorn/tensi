@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import SideNavbar from "./SideNavbar";
 import { useState, useEffect } from "react";
 import { FiMenu } from "react-icons/fi";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import MiniLoader from "../Loaders/MiniLoader";
 
 export default function Navbar() {

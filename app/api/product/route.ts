@@ -53,7 +53,7 @@ export async function PUT(req: NextRequest) {
   await connectdb();
   const productid = req.nextUrl.searchParams.get("productid");
   try {
-    let product = await Product.findByIdAndUpdate(productid, await req.json(), {
+    const product = await Product.findByIdAndUpdate(productid, await req.json(), {
       new: true,
     });
     return NextResponse.json(

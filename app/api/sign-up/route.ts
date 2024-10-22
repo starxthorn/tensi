@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   await connectdb();
   try {
-    const { name, email, password, verified } = await req.json();
+    const { name, email, password } = await req.json();
     const Existuser = await User.findOne({ email });
     if (Existuser) {
       return NextResponse.json(

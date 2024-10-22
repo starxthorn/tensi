@@ -13,7 +13,7 @@ import MiniLoader from "@/components/Loaders/MiniLoader";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const [loader, setLoader] = useState(false);
   const router = useRouter();
   const session = useSession();

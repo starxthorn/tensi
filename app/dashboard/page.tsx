@@ -18,10 +18,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
-import MiniLoader from "@/components/Loaders/MiniLoader";
 
-export default function page() {
+export default function Page() {
   const { categories, customers, products, user } = useCurrentUser();
   return (
     <>
