@@ -133,7 +133,7 @@ export default function Page() {
               <>
                 <div className="flex items-center justify-between p-5 px-0">
                   <h1 className="text-2xl font-bold">Recent Customers</h1>
-                  <Link href={`/dashboard/customers/${user?._id}`}>
+                  <Link href={`/dashboard/users/${user?._id}`}>
                     <p className="text-blue-500 flex items-center justify-center gap-1 mr-5">
                       see all <FaArrowRight className="text-blue-500" />
                     </p>
@@ -175,7 +175,7 @@ export default function Page() {
                   <h1 className="text-2xl font-bold">
                     You have not added any product
                   </h1>
-                  <Link href={`/dashboard/products/${user?._id}`}>
+                  <Link href={`/dashboard/category/${user?._id}`}>
                     <Button className="w-40 mt-4">Add Product</Button>
                   </Link>
                 </div>
