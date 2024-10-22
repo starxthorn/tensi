@@ -48,7 +48,7 @@ export default function Page() {
           <TailwindButton onClick={() => signOut()}>Sign Out</TailwindButton>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <div className="flex items-center justify-start gap-6 bg-neutral-900 h-[15vh] p-5 rounded-lg hover:scale-125 hover:ml-14 transition-all hover:shadow-black hover:shadow-2xl">
+          <div className="flex items-center justify-start gap-6 bg-neutral-900 h-[9rem] p-5 rounded-lg hover:scale-125 hover:ml-14 transition-all hover:shadow-black hover:shadow-2xl">
             <div>
               <Image
                 src={user?.avatar || "/avatar.jpeg"}
@@ -86,7 +86,7 @@ export default function Page() {
           </div>
           <Link
             href={`/dashboard/category/${user?._id}`}
-            className="h-[15vh] bg-neutral-900 p-5 rounded-lg border-2 transition-all hover:scale-125 hover:shadow-black hover:border-2 hover:border-neutral-600 hover:shadow-2xl"
+            className="h-[9rem] bg-neutral-900 p-5 rounded-lg border-2 transition-all hover:scale-125 hover:shadow-black hover:border-2 hover:border-neutral-600 hover:shadow-2xl"
           >
             <h1 className="text-4xl mt-2 font-bold">
               {products?.length || "0"}
@@ -95,7 +95,7 @@ export default function Page() {
           </Link>
           <Link
             href={`/dashboard/users/${user?._id}`}
-            className="h-[15vh] bg-neutral-900 p-5 rounded-lg border-2 transition-all hover:scale-125 hover:shadow-black hover:border-2 hover:border-neutral-600 hover:shadow-2xl"
+            className="h-[9rem] bg-neutral-900 p-5 rounded-lg border-2 transition-all hover:scale-125 hover:shadow-black hover:border-2 hover:border-neutral-600 hover:shadow-2xl"
           >
             <h1 className="text-4xl mt-2 font-bold">
               {customers?.length || "0"}
@@ -104,7 +104,7 @@ export default function Page() {
           </Link>
           <Link
             href={`/dashboard/settings/${user?._id}`}
-            className="h-[15vh] bg-neutral-900 p-5 rounded-lg border-2 transition-all hover:scale-125 hover:shadow-black hover:border-2 hover:border-neutral-600 hover:shadow-2xl hover:mr-14"
+            className="h-[9rem] bg-neutral-900 p-5 rounded-lg border-2 transition-all hover:scale-125 hover:shadow-black hover:border-2 hover:border-neutral-600 hover:shadow-2xl hover:mr-14"
           >
             <h1 className="text-4xl mt-2 font-bold">
               {categories?.length || "0"}
