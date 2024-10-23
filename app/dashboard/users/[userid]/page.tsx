@@ -105,6 +105,7 @@ export default function Page({ params }: { params: { userid: string } }) {
     setCustomer((prevCustomer) => ({
       ...prevCustomer,
       product: selectedProduct,
+      credit: selectedProduct?.price,
     }));
   };
 
@@ -291,6 +292,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                           onChange={handleInput}
                           placeholder="0"
                           type="number"
+                          value={customer?.credit}
                         />
                       </LabelInputContainer>
                     </div>
@@ -341,6 +343,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                     <SelectItem
                                       value={data?._id ?? ""}
                                       key={id}
+                                      className="capitalize"
                                     >
                                       {data?.name}
                                     </SelectItem>
@@ -358,7 +361,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                           <>
                             <div className="flex items-center justify-center gap-4">
                               <MiniLoader />
-                              <p className="text-neutral-400">Saving</p>
+                              <p className="text-neutral-400">Creating</p>
                             </div>
                           </>
                         ) : (
@@ -379,6 +382,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                 <TableHead>CNIC</TableHead>
                 <TableHead>Debit</TableHead>
                 <TableHead>Credit</TableHead>
+                <TableHead>To Pay</TableHead>
                 <TableHead>Product</TableHead>
                 <TableHead>Purchase Type</TableHead>
                 <TableHead>Edit</TableHead>
@@ -392,12 +396,29 @@ export default function Page({ params }: { params: { userid: string } }) {
                       return (
                         <>
                           <TableRow key={id}>
-                            <TableCell>{data.name}</TableCell>
+                            <TableCell className="capitalize">
+                              {data.name}
+                            </TableCell>
                             <TableCell>{data.phone}</TableCell>
                             <TableCell>{data.cnic}</TableCell>
-                            <TableCell>{data.debit}</TableCell>
-                            <TableCell>{data.credit}</TableCell>
-                            <TableCell>{data.product?.name}</TableCell>
+                            <TableCell>{data.debit ?? "0"}</TableCell>
+                            <TableCell>{data.credit ?? "0"}</TableCell>
+                            <TableCell
+                              className={
+                                data?.purchase === "installment"
+                                  ? "text-red-500"
+                                  : "text-white"
+                              }
+                            >
+                              {data?.purchase === "permanent purchase"
+                                ? "0"
+                                : data.credit && data.debit
+                                ? data?.credit - data?.debit
+                                : "0"}
+                            </TableCell>
+                            <TableCell className="capitalize">
+                              {data.product?.name}
+                            </TableCell>
                             <TableCell>
                               {data?.purchase === "installment" ? (
                                 <>
@@ -572,6 +593,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                                     <SelectItem
                                                       value={data?._id ?? ""}
                                                       key={id}
+                                                      className="capitalize"
                                                     >
                                                       {data?.name}
                                                     </SelectItem>
@@ -647,12 +669,29 @@ export default function Page({ params }: { params: { userid: string } }) {
                       return (
                         <>
                           <TableRow key={id}>
-                            <TableCell>{data.name}</TableCell>
+                            <TableCell className="capitalize">
+                              {data.name}
+                            </TableCell>
                             <TableCell>{data.phone}</TableCell>
                             <TableCell>{data.cnic}</TableCell>
-                            <TableCell>{data.debit}</TableCell>
-                            <TableCell>{data.credit}</TableCell>
-                            <TableCell>{data?.product?.name}</TableCell>
+                            <TableCell>{data.debit ?? "0"}</TableCell>
+                            <TableCell>{data.credit ?? "0"}</TableCell>
+                            <TableCell
+                              className={
+                                data?.purchase === "installment"
+                                  ? "text-red-500"
+                                  : "text-white"
+                              }
+                            >
+                              {data.purchase === "permanent purchase"
+                                ? "0"
+                                : data.credit && data.debit
+                                ? data?.credit - data?.debit
+                                : "0"}
+                            </TableCell>
+                            <TableCell className="capitalize">
+                              {data?.product?.name}
+                            </TableCell>
                             <TableCell>
                               {data?.purchase === "installment" ? (
                                 <>

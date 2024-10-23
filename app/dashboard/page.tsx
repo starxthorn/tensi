@@ -48,28 +48,30 @@ export default function Page() {
           <TailwindButton onClick={() => signOut()}>Sign Out</TailwindButton>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <div className="flex items-center justify-start gap-6 bg-neutral-900 h-[9rem] p-5 rounded-lg hover:scale-125 hover:ml-14 transition-all hover:shadow-black hover:shadow-2xl">
+          <div className="flex items-center justify-start gap-4 bg-neutral-900 h-[9rem] p-5 rounded-lg hover:scale-125 hover:ml-14 transition-all hover:shadow-black hover:shadow-2xl">
             <div>
               <Image
                 src={user?.avatar || "/avatar.jpeg"}
-                width={70}
-                height={70}
+                width={60}
+                height={60}
                 alt="profile picture"
                 className="rounded-full"
               />
             </div>
             <div className="flex flex-col items-start justify-center">
               <div className="flex items-center justify-start gap-2">
-                <h1 className="capitalize font-bold text-2xl">{user?.name}</h1>
+                <h1 className="capitalize font-bold text-lg">{user?.name}</h1>
                 <MdVerified
                   className={`text-lg ${
                     user?.verified !== "verified" && "hidden"
-                  } flex lg:text-xl text-neutral-500`}
+                  } flex text-neutral-500`}
                 />
               </div>
-              <p className="text-zinc-400 text-md mt-1">{user?.email}</p>
+              <p className="text-zinc-400 text-sm">
+                {user?.phone ? `+92${user.phone}` : ""}
+              </p>
               <p
-                className={`rounded-md text-sm mt-2 px-[5px] border-2 font-semibold ${
+                className={`rounded-md text-xs mt-1 px-[5px] border-2 font-semibold ${
                   user?.verified === "verified" &&
                   "bg-green-200 border-green-600 text-green-600"
                 } ${
@@ -153,7 +155,9 @@ export default function Page() {
                         .map((data, id) => (
                           <TableRow key={id}>
                             <TableCell>{data._id}</TableCell>
-                            <TableCell>{data.name}</TableCell>
+                            <TableCell className="capitalize">
+                              {data.name}
+                            </TableCell>
                             <TableCell>{data.phone}</TableCell>
                           </TableRow>
                         ))
@@ -204,7 +208,9 @@ export default function Page() {
                         .map((data, id) => (
                           <TableRow key={id}>
                             <TableCell>{data._id}</TableCell>
-                            <TableCell>{data.name}</TableCell>
+                            <TableCell className="capitalize">
+                              {data.name}
+                            </TableCell>
                             <TableCell>{data.price}</TableCell>
                           </TableRow>
                         ))

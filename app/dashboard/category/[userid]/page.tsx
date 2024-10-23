@@ -273,7 +273,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                       {loader ? (
                         <div className="flex items-center justify-center gap-4">
                           <MiniLoader />
-                          <p className="text-neutral-400">Create Product</p>
+                          <p className="text-neutral-400">Creating</p>
                         </div>
                       ) : (
                         <>Create Product</>
@@ -303,7 +303,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                   ?.map((data, id) => (
                     <TableRow key={id}>
                       <TableCell>{data?._id}</TableCell>
-                      <TableCell>{data?.name}</TableCell>
+                      <TableCell className="capitalize">{data?.name}</TableCell>
                       <TableCell>{data?.price}</TableCell>
                       <TableCell
                         className={`${
@@ -451,7 +451,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                   ?.map((data, id) => (
                     <TableRow key={id}>
                       <TableCell>{data?._id}</TableCell>
-                      <TableCell>{data?.name}</TableCell>
+                      <TableCell className="capitalize">{data?.name}</TableCell>
                       <TableCell>{data?.price}</TableCell>
                       <TableCell
                         className={`${

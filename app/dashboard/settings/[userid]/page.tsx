@@ -138,7 +138,7 @@ export default function Page({ params }: { params: { userid: string } }) {
           <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-neutral-950 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
         </div>
         <section className={`mt-10 grid grid-cols-1 lg:grid-cols-3 gap-10`}>
-          <div className="relative col-span-1 h-[80vh] flex flex-col justify-start p-4 rounded-lg bg-neutral-900 border">
+          <div className="relative col-span-1 h-auto pb-20 flex flex-col justify-start p-4 rounded-lg bg-neutral-900 border">
             <div className="absolute right-5 top-5 flex items-center justify-center gap-3 text-center">
               {user?.verified === "verified" && (
                 <>
@@ -167,8 +167,8 @@ export default function Page({ params }: { params: { userid: string } }) {
             >
               <Image
                 src={session?.data?.user?.image || "/avatar.jpeg"}
-                width={170}
-                height={170}
+                width={150}
+                height={150}
                 alt="profile picture"
                 className={`rounded-full`}
               />
@@ -184,7 +184,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                   <> </>
                 )}
               </h1>
-              <p className="w-[24rem] mt-4 text-neutral-400 text-center">
+              <p className="w-[24rem] mt-2 text-neutral-400 text-center">
                 {user?.verified === "pending" ||
                 user?.verified === "verified" ? (
                   user?.description || (
@@ -196,13 +196,13 @@ export default function Page({ params }: { params: { userid: string } }) {
               </p>
               {user?.verified !== "not verified" ? (
                 <>
-                  <div className="mt-14 w-[30rem] flex flex-col gap-4">
+                  <div className="mt-8 flex flex-col gap-4 w-full">
                     <div className="flex items-center justify-between w-full mt-2">
                       <div className="flex items-center justify-center gap-2">
                         <BiSolidUserCircle className="text-2xl lg:text-3xl text-neutral-500" />
                         <h1 className="text-neutral-300 font-semibold">UID</h1>
                       </div>
-                      <h1 className="font-bold">
+                      <h1>
                         {user?._id || (
                           <Skeleton className="w-[6rem] h-6 rounded-full" />
                         )}
@@ -215,7 +215,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                           Email
                         </h1>
                       </div>
-                      <h1 className="font-bold">
+                      <h1>
                         {user?.email || (
                           <Skeleton className="w-[6rem] h-6 rounded-full" />
                         )}
@@ -228,7 +228,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                           Phone
                         </h1>
                       </div>
-                      <h1 className="font-bold">
+                      <h1>
                         {user?.phone || (
                           <Skeleton className="w-[6rem] h-6 rounded-full" />
                         )}
@@ -241,7 +241,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                           Location
                         </h1>
                       </div>
-                      <h1 className="font-bold">
+                      <h1>
                         {user?.location || (
                           <Skeleton className="w-[6rem] h-6 rounded-full" />
                         )}
@@ -252,7 +252,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                         <FaAddressCard className="text-2xl lg:text-3xl text-neutral-500" />
                         <h1 className="text-neutral-300 font-semibold">CNIC</h1>
                       </div>
-                      <h1 className="font-bold">
+                      <h1>
                         {user?.cnic || (
                           <Skeleton className="w-[6rem] h-6 rounded-full" />
                         )}
