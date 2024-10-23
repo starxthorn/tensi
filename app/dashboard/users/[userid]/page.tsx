@@ -167,16 +167,29 @@ export default function Page({ params }: { params: { userid: string } }) {
     e.preventDefault();
     setLoader(true);
     try {
-      const res = await fetch(`/api/customer?customerid=${cid}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(customer),
-      });
-      if (res.ok) {
-        toast.success("Customer updated");
-        window.location.reload();
+      if (
+        customer?.product?.price &&
+        customer.debit &&
+        customer?.product?.price < customer?.debit
+      ) {
+        toast.error("Paid price should less");
+        setLoader(false);
+      } else if (
+        customer?.product?.price &&
+        customer.debit &&
+        customer?.product?.price > customer?.debit
+      ) {
+        const res = await fetch(`/api/customer?customerid=${cid}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(customer),
+        });
+        if (res.ok) {
+          toast.success("Customer updated");
+          window.location.reload();
+        }
       }
     } catch (error) {
       console.error(error);
@@ -272,7 +285,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                     <div className="flex items-center justify-center gap-4 mb-4">
                       <LabelInputContainer>
                         <Label htmlFor="debit" className="mb-2">
-                          Debit
+                          Paid
                         </Label>
                         <Input
                           id="debit"
@@ -280,19 +293,6 @@ export default function Page({ params }: { params: { userid: string } }) {
                           onChange={handleInput}
                           placeholder="0"
                           type="number"
-                        />
-                      </LabelInputContainer>
-                      <LabelInputContainer>
-                        <Label htmlFor="credit" className="mb-2">
-                          Credit
-                        </Label>
-                        <Input
-                          id="credit"
-                          name="credit"
-                          onChange={handleInput}
-                          placeholder="0"
-                          type="number"
-                          value={customer?.credit}
                         />
                       </LabelInputContainer>
                     </div>
@@ -380,8 +380,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                 <TableHead>Name</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead>CNIC</TableHead>
-                <TableHead>Debit</TableHead>
-                <TableHead>Credit</TableHead>
+                <TableHead>Paid</TableHead>
                 <TableHead>To Pay</TableHead>
                 <TableHead>Product</TableHead>
                 <TableHead>Purchase Type</TableHead>
@@ -402,7 +401,6 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <TableCell>{data.phone}</TableCell>
                             <TableCell>{data.cnic}</TableCell>
                             <TableCell>{data.debit ?? "0"}</TableCell>
-                            <TableCell>{data.credit ?? "0"}</TableCell>
                             <TableCell
                               className={
                                 data?.purchase === "installment"
@@ -410,10 +408,10 @@ export default function Page({ params }: { params: { userid: string } }) {
                                   : "text-white"
                               }
                             >
-                              {data?.purchase === "permanent purchase"
+                              {data.purchase === "permanent purchase"
                                 ? "0"
-                                : data.credit && data.debit
-                                ? data?.credit - data?.debit
+                                : data.credit && data.product?.price
+                                ? data?.product?.price - data?.credit
                                 : "0"}
                             </TableCell>
                             <TableCell className="capitalize">
@@ -506,7 +504,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                     <div className="flex items-center justify-center gap-4 mb-4">
                                       <LabelInputContainer>
                                         <Label htmlFor="debit" className="mb-2">
-                                          Debit
+                                          Paid
                                         </Label>
                                         <Input
                                           id="debit"
@@ -515,22 +513,6 @@ export default function Page({ params }: { params: { userid: string } }) {
                                           placeholder="0"
                                           type="number"
                                           value={customer?.debit}
-                                        />
-                                      </LabelInputContainer>
-                                      <LabelInputContainer>
-                                        <Label
-                                          htmlFor="credit"
-                                          className="mb-2"
-                                        >
-                                          Credit
-                                        </Label>
-                                        <Input
-                                          id="credit"
-                                          name="credit"
-                                          onChange={handleInput}
-                                          placeholder="0"
-                                          type="number"
-                                          value={customer?.credit}
                                         />
                                       </LabelInputContainer>
                                     </div>
@@ -675,7 +657,6 @@ export default function Page({ params }: { params: { userid: string } }) {
                             <TableCell>{data.phone}</TableCell>
                             <TableCell>{data.cnic}</TableCell>
                             <TableCell>{data.debit ?? "0"}</TableCell>
-                            <TableCell>{data.credit ?? "0"}</TableCell>
                             <TableCell
                               className={
                                 data?.purchase === "installment"
@@ -685,8 +666,8 @@ export default function Page({ params }: { params: { userid: string } }) {
                             >
                               {data.purchase === "permanent purchase"
                                 ? "0"
-                                : data.credit && data.debit
-                                ? data?.credit - data?.debit
+                                : data.debit && data.product?.price
+                                ? data?.product?.price - data?.debit
                                 : "0"}
                             </TableCell>
                             <TableCell className="capitalize">
@@ -779,7 +760,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                     <div className="flex items-center justify-center gap-4 mb-4">
                                       <LabelInputContainer>
                                         <Label htmlFor="debit" className="mb-2">
-                                          Debit
+                                          Paid
                                         </Label>
                                         <Input
                                           id="debit"
@@ -788,22 +769,6 @@ export default function Page({ params }: { params: { userid: string } }) {
                                           placeholder="0"
                                           type="number"
                                           value={customer?.debit}
-                                        />
-                                      </LabelInputContainer>
-                                      <LabelInputContainer>
-                                        <Label
-                                          htmlFor="credit"
-                                          className="mb-2"
-                                        >
-                                          Credit
-                                        </Label>
-                                        <Input
-                                          id="credit"
-                                          name="credit"
-                                          onChange={handleInput}
-                                          placeholder="0"
-                                          type="number"
-                                          value={customer?.credit}
                                         />
                                       </LabelInputContainer>
                                     </div>

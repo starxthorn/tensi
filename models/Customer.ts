@@ -16,9 +16,6 @@ const customerSchema = new mongoose.Schema({
   debit: {
     type: Number,
   },
-  credit: {
-    type: Number,
-  },
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",

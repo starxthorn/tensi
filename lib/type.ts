@@ -18,7 +18,6 @@ export interface CustomerType {
   name?: string;
   phone?: number;
   cnic?: number;
-  credit?: number;
   debit?: number;
   product?: ProductType | null;
   purchase?: "installment" | "permanent purchase";
