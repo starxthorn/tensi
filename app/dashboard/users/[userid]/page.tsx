@@ -78,6 +78,12 @@ export default function Page({ params }: { params: { userid: string } }) {
   const handleSelectPurchase = (
     value: "installment" | "permanent purchase"
   ) => {
+    if (value === "permanent purchase") {
+      setCustomer({
+        ...customer,
+        debit: 0,
+      });
+    }
     setCustomer({
       ...customer,
       purchase: value,
@@ -105,7 +111,7 @@ export default function Page({ params }: { params: { userid: string } }) {
     setCustomer((prevCustomer) => ({
       ...prevCustomer,
       product: selectedProduct,
-      credit: selectedProduct?.price,
+      debit: selectedProduct?.price,
     }));
   };
 
@@ -113,30 +119,14 @@ export default function Page({ params }: { params: { userid: string } }) {
     e.preventDefault();
     setLoader(true);
     try {
-      if (user?.verified !== "verified") {
-        toast.error("Please verify your account");
-        setLoader(false);
-      } else {
-        if (products && products.length <= 0) {
-          toast.error("Please add any product");
-          setLoader(false);
-        } else {
-          if (
-            customer?.product?.price &&
-            customer.debit &&
-            customer?.product?.price < customer?.debit
-          ) {
-            toast.error("Paid price should less");
-            setLoader(false);
-          } else if (
-            customer?.product?.price &&
-            customer.debit &&
-            customer?.product?.price > customer?.debit
-          ) {
-            if (customer?.product?.stock && customer?.product?.stock <= 0) {
-              toast.error("Product stock is zero");
-              setLoader(false);
-            } else {
+      if (user?.verified === "verified") {
+        if (products?.length && products.length >= 0) {
+          if (customer?.product?.stock && customer?.product?.stock >= 1) {
+            if (
+              customer.product.price &&
+              customer?.debit &&
+              customer.product.price >= customer?.debit
+            ) {
               const productStock = customer?.product?.stock;
               if (productStock) {
                 await fetch(`/api/product?productid=${customer.product?._id}`, {
@@ -164,9 +154,21 @@ export default function Page({ params }: { params: { userid: string } }) {
               } else {
                 toast.error("Something wrong");
               }
+            } else {
+              toast.error("Paid price should less");
+              setLoader(false);
             }
+          } else {
+            toast.error("Product stock is zero");
+            setLoader(false);
           }
+        } else {
+          toast.error("Please add any product");
+          setLoader(false);
         }
+      } else {
+        toast.error("Please verify your account");
+        setLoader(false);
       }
     } catch (error) {
       console.log(error);
@@ -190,7 +192,7 @@ export default function Page({ params }: { params: { userid: string } }) {
       } else if (
         customer?.product?.price &&
         customer.debit &&
-        customer?.product?.price > customer?.debit
+        customer?.product?.price >= customer?.debit
       ) {
         const res = await fetch(`/api/customer?customerid=${cid}`, {
           method: "PUT",
@@ -276,6 +278,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                           name="phone"
                           onChange={handleInput}
                           required
+                          min={11}
                           id="phone"
                           placeholder="+92"
                           type="number"
@@ -293,6 +296,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                         onChange={handleInput}
                         placeholder="34201-0891231-8"
                         type="number"
+                        min={13}
                       />
                     </LabelInputContainer>
                     <div className="flex items-center justify-center gap-4 mb-4">
@@ -497,6 +501,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                           placeholder="+92"
                                           type="number"
                                           value={customer?.phone}
+                                          min={11}
                                         />
                                       </LabelInputContainer>
                                     </div>
@@ -512,6 +517,7 @@ export default function Page({ params }: { params: { userid: string } }) {
                                         placeholder="34201-0891231-8"
                                         type="number"
                                         value={customer?.cnic}
+                                        min={13}
                                       />
                                     </LabelInputContainer>
                                     <div className="flex items-center justify-center gap-4 mb-4">
