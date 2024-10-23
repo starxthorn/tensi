@@ -121,36 +121,49 @@ export default function Page({ params }: { params: { userid: string } }) {
           toast.error("Please add any product");
           setLoader(false);
         } else {
-          if (customer?.product?.stock && customer?.product?.stock <= 0) {
-            toast.error("Product stock is zero");
+          if (
+            customer?.product?.price &&
+            customer.debit &&
+            customer?.product?.price < customer?.debit
+          ) {
+            toast.error("Paid price should less");
             setLoader(false);
-          } else {
-            const productStock = customer?.product?.stock;
-            if (productStock) {
-              await fetch(`/api/product?productid=${customer.product?._id}`, {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ stock: productStock - 1 }),
-              });
-            }
-            const res = await fetch(
-              `/api/customer?userid=${params.userid}&productid=${customer?.product?._id}`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(customer),
-              }
-            );
-            const data = await res.json();
-            if (res.ok) {
-              toast.success(data.message);
-              window.location.reload();
+          } else if (
+            customer?.product?.price &&
+            customer.debit &&
+            customer?.product?.price > customer?.debit
+          ) {
+            if (customer?.product?.stock && customer?.product?.stock <= 0) {
+              toast.error("Product stock is zero");
+              setLoader(false);
             } else {
-              toast.error("Something wrong");
+              const productStock = customer?.product?.stock;
+              if (productStock) {
+                await fetch(`/api/product?productid=${customer.product?._id}`, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ stock: productStock - 1 }),
+                });
+              }
+              const res = await fetch(
+                `/api/customer?userid=${params.userid}&productid=${customer?.product?._id}`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(customer),
+                }
+              );
+              const data = await res.json();
+              if (res.ok) {
+                toast.success(data.message);
+                window.location.reload();
+              } else {
+                toast.error("Something wrong");
+              }
             }
           }
         }
@@ -410,8 +423,8 @@ export default function Page({ params }: { params: { userid: string } }) {
                             >
                               {data.purchase === "permanent purchase"
                                 ? "0"
-                                : data.credit && data.product?.price
-                                ? data?.product?.price - data?.credit
+                                : data?.debit && data.product?.price
+                                ? data?.product?.price - data?.debit
                                 : "0"}
                             </TableCell>
                             <TableCell className="capitalize">
